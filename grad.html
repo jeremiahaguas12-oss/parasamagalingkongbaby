@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>For My Love 💖</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background: linear-gradient(135deg, #ff6fb5, #ffc1e3);
+      color: #fff;
+      text-align: center;
+      overflow-x: hidden;
+    }
+
+    .section {
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 10px;
+    }
+
+    p {
+      font-size: 1.3rem;
+      max-width: 600px;
+    }
+
+    button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 1rem;
+      border: none;
+      border-radius: 25px;
+      background: white;
+      color: #ff5e78;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    button:hover {
+      transform: scale(1.1);
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    .heart {
+      position: fixed;
+      color: red;
+      animation: float 5s linear infinite;
+    }
+
+    @keyframes float {
+      from { transform: translateY(100vh); opacity: 1; }
+      to { transform: translateY(-10vh); opacity: 0; }
+    }
+
+    .confetti {
+      position: fixed;
+      width: 8px;
+      height: 8px;
+      opacity: 0.95;
+      z-index: 9999;
+      animation: confettiFall 4s linear forwards;
+    }
+
+    @keyframes confettiFall {
+      0% { transform: translateY(-10vh) scale(0) rotate(0deg); }
+      50% { transform: translateY(40vh) scale(1.2) rotate(360deg); }
+      100% { transform: translateY(110vh) scale(1) rotate(720deg); }
+    }
+  
+    /* ===== Added smooth animations (non-invasive) ===== */
+    body {
+      animation: pageFadeIn 1.2s ease;
+    }
+
+    @keyframes pageFadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    h1 {
+      animation: popIn 0.8s ease;
+    }
+
+    p {
+      animation: fadeUp 1s ease;
+    }
+
+    button {
+      animation: fadeUp 1.2s ease;
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+
+    .heart {
+      animation: float 5s linear infinite, pulse 1s ease-in-out infinite;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    @keyframes fadeUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+      100% { transform: scale(1); }
+    }
+
+    .confetti {
+      animation: confettiPop 2s ease-out forwards;
+    }
+
+    @keyframes confettiPop {
+      0% { transform: scale(0) rotate(0deg); opacity: 0; }
+      50% { transform: scale(1.4) rotate(180deg); opacity: 1; }
+      100% { transform: scale(1) rotate(360deg); opacity: 0; }
+    }
+
+</style>
+</head>
+<body>
+
+  <div class="section">
+    <h1>Congratulations, My Love!</h1>
+     <img src="neyney.jpg" alt="Memory Photo" style="width:220px;max-width:80%;border-radius:20px;margin-bottom:20px;box-shadow:0 10px 30px rgba(0,0,0,0.2);">
+    <p>You did it. I'm so proud of you. Click below 💖</p>
+    <button onclick="nextSection(1)">Click Me</button>
+  </div>
+
+  <div class="section hidden" id="section1">
+    <h1>A message for you 💌</h1>
+    <p>You worked so hard for this moment, and you deserve every bit of success. I saw your struggles, your effort, and your dedication.</p>
+    <button onclick="nextSection(2)">Next</button>
+  </div>
+
+  <div class="section hidden" id="section2">
+    <h1>I'm proud of you 🌟</h1>
+    <p>No matter what happens next, always remember how amazing you are. This is just the beginning of your journey.</p>
+    <button onclick="nextSection(3)">Next</button>
+  </div>
+
+  <div class="section hidden" id="section3">
+    <h1>I love you, Honey! 💖 </h1>
+    <p>Thank you for being strong, kind, and inspiring. I’m lucky to have you. Congratulations! 🎓(sorry eto muna flowers ko for u huhu) </p>
+     <img src="flower.jpg"
+     style="width:220px;
+            border-radius:20px;
+            box-shadow:0 10px 30px rgba(0,0,0,0.2);
+            background:transparent;">
+    <button onclick="startHearts()">Celebrate 🎉</button>
+  </div>
+
+  <audio id="bgMusic" src="huwagkangmatakot.mp3"></audio>
+
+  <script>
+    function nextSection(num) {
+      document.querySelectorAll('.section').forEach(sec => sec.classList.add('hidden'));
+      document.getElementById('section' + num).classList.remove('hidden');
+    }
+
+    function startHearts() {
+      const music = document.getElementById('bgMusic');
+      music.volume = 0;
+      music.play();
+
+      let volume = 0;
+      const fade = setInterval(() => {
+        if (volume < 1) {
+          volume += 0.05;
+          music.volume = volume;
+        } else {
+          clearInterval(fade);
+        }
+      }, 200);
+
+      setInterval(() => {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerHTML = '❤️';
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.fontSize = (Math.random() * 20 + 10) + 'px';
+        document.body.appendChild(heart);
+
+        setTimeout(() => {
+          heart.remove();
+        }, 5000);
+      }, 200);
+
+      const colors = ['#ff4d6d', '#ffd166', '#06d6a0', '#4cc9f0', '#f72585'];
+
+      function burstConfetti() {
+        for (let i = 0; i < 80; i++) {
+          const confetti = document.createElement('div');
+          confetti.classList.add('confetti');
+          confetti.style.left = '50vw';
+          confetti.style.top = '50vh';
+          confetti.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+          confetti.style.width = (Math.random() * 10 + 8) + 'px';
+          confetti.style.height = confetti.style.width;
+
+          const angle = Math.random() * 2 * Math.PI;
+          const distance = Math.random() * 500 + 200;
+
+          confetti.animate([
+            { transform: 'translate(0, 0) scale(0)', opacity: 1 },
+            { transform: `translate(${Math.cos(angle) * distance}px, ${Math.sin(angle) * distance}px) scale(1.5)`, opacity: 1 },
+            { transform: `translate(${Math.cos(angle) * (distance + 100)}px, ${Math.sin(angle) * (distance + 200)}px) scale(1)`, opacity: 0 }
+          ], {
+            duration: 2000,
+            easing: 'cubic-bezier(0.25, 1, 0.5, 1)',
+            fill: 'forwards'
+          });
+
+          document.body.appendChild(confetti);
+
+          setTimeout(() => confetti.remove(), 2500);
+        }
+      }
+
+      burstConfetti();
+    }
+  </script>
+
+</body>
+</html>
